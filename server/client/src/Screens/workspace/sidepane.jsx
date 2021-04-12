@@ -5,6 +5,7 @@ const Sidepane=()=>{
 
     return(
         <>
+        <div  class="sidenavContainer">
         <div class="sidenav">
         <Link href="#about">Publish</Link>
         <Link href="#services">Statistics</Link>
@@ -14,6 +15,7 @@ const Sidepane=()=>{
         <br />
         <Link href="#contact">Guide</Link>
         <Link href="#contact">Contact Us</Link>
+        </div>
         </div>
         </>);
     }

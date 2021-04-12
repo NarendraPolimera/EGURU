@@ -33,6 +33,11 @@ const Main=()=>{
           {page===0 && <Course CourseList={CourseList} listing={listing} edit={edit}/>}
           {page===1 && <CourseDesign cn={cname} back={back}/>}
           </div>
+
+          <textarea class="inpBox" id='conctxt'
+          type="textarea" 
+          placeholder="Epilogue" 
+          onChange={handleChange('conctxt')} value={conctxt}/>
         </div>
         </>);
     }

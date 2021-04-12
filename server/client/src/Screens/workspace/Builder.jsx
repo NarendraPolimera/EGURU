@@ -3,7 +3,7 @@ import NaviDesgn from './NaviDesgn';
 import Banner from './Banner';
 import Sidepane from './sidepane';
 import Main from './Main';
-import Footer from '../Footer';
+import Footer from './CustoFooter';
 import '../App.css';
 
 function Builder() {
