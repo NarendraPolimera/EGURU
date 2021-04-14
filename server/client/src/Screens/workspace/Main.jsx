@@ -12,7 +12,7 @@ const Main=()=>{
         setFormData({ ...formData, [text]: e.target.value });
     }
 
-  const [CourseList, listing] = useState([]);
+  const [CourseList, listing] = useState([{id:0}]);
   const [page, change] = useState(0);
   const [cname, changename] = useState({});
   function edit(e){
@@ -25,13 +25,12 @@ const Main=()=>{
     return(
         <>
         <div class='mainpage'>
-        <textarea class="inpBox" id="introtxt"
+        <textarea class="inpBox" id="introtxt" 
           type="textarea" 
           placeholder="Say Something.." 
           onChange={handleChange('introtxt')} value={introtxt}/>
-          <div class="container" style={{maxWidth:'850px'}}>
-          {page===0 && <Course CourseList={CourseList} listing={listing} edit={edit}/>}
-          {page===1 && <CourseDesign cn={cname} back={back}/>}
+          <div class="container" style={{maxWidth:'850px', alignItems:'center'}}>
+            <Course CourseList={CourseList} listing={listing} edit={edit}/>
           </div>
 
           <textarea class="inpBox" id='conctxt'

@@ -233,7 +233,7 @@ nav{
 
 .footer2{
   font-size: 15px;
-  color: #9e9e9e;
+  color: #9e9e9ee1;
   background-color: #383838;
   padding:18px;
   text-align: center;
@@ -362,7 +362,7 @@ nav{
 }
 
 .save-button:hover {
-  background-color: #456ABD;
+  background-color: rgb(0,112,192);
   color: white;
 }
 
@@ -440,26 +440,27 @@ nav{
   font-size: 13px;
 }
 #introtxt{
-  margin-top: 32px;
-    margin-bottom: 32px;
+  margin-top: 40px;
+  margin-bottom: 40px;
   padding-top: 32px;
-  letter-spacing: 0.4px;
-  font-weight: bold;
-  color: #01121894;
+  letter-spacing: 1px;
+  color: #0983ee;
   font-size: 21px;
+  /**color: #676770;*/
 }
 #about{
     margin:5px;
     padding: 5px;
     letter-spacing: 0.4px;
-    color: #6a859c;
+    color: #42596d;
    font-size: 14px;
 }
 #contact{
   margin:5px;
   padding: 5px 0px 0px 25px;
   letter-spacing: 0.4px;
-  color: #6a859c;
+  color: #42596d;
+  font-weight: 500;
  font-size: 14px;
  text-align: left;
 }
@@ -515,7 +516,8 @@ nav{
     overflow: auto;
     border-style: solid;
     border-left-width: 5.5px;
-    border-left-color: #cddce9;
+    
+    border-left-color: #004d9138;
     border-radius: 1.8%;
     
 }
@@ -528,25 +530,41 @@ nav{
   color: #818181;
   display: block;
   transition-property: color;
-  transition-duration: 50ms;
+  transition-duration: 20ms;
   transition-timing-function: ease-in-out;
 }
-
+.sidenav:hover{
+  
+  border-left-color: #004d916c;
+}
 .sidenav a:hover {
-  color: #011218;
+  border-left-color: #cddce9;
+  color: #010d11;
   text-decoration: none;
   font-weight: 559;
 }
 
 .addCourse{
-  width:50px;
-  height:50px;
-  border-width: 3px;
-  font-size: 30px;
-  font-weight: bolder;
-  color:#676770;
-  border-color: #676770;
+  background: #ffffff;
+border-radius: 100%;
+box-shadow: 0px 0px 8px 0 #BEBEBE;
+  width:75px;
+  height:75px;
   border-radius: 100%;
+  font-size: 50px;
+  font-weight: 800;
+  padding:0px;
+  margin-top:135px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  color: #004d918f;
+}
+.addCourse:hover{
+  box-shadow: 0px 0px 11px 0 #BEBEBE;
+
+  color: #004d91e0;
+  font-weight: bolder;
+
 }
 /******************************************************/
 .courseCard{
@@ -555,11 +573,11 @@ nav{
   width: 270px;
   background: #fff;
   overflow: hidden;
-  box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
+  box-shadow: 0 0 8px 0 #BEBEBE;
+  transition: all 0.1s ease;
 }
 .courseCard:hover{
-  box-shadow: 0 0 15px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 0 15px 0 #BEBEBE;
 }
 .courseCard .image{
   position: absolute;
@@ -587,7 +605,7 @@ nav{
 }
 .wrapper textarea{
   font-size: 14px;
-  color: rgb(134, 134, 134);
+  color: rgb(104, 107, 114);
   text-align: center;
   outline: none;
   overflow: hidden;
@@ -599,7 +617,7 @@ nav{
   margin-left: 45px;
   margin-top:  8px;
   font-size: small;
-  color:rgba(90, 88, 88, 0.637);
+  color:rgba(90, 88, 88, 0.719);
 }
 .wrapper .btns{
   display: flex;
@@ -614,8 +632,8 @@ nav{
   width: 30px;
   padding: 5px;
   margin: 0 10px;
-  border: 2px solid #7f8ddd;
-  background: #7f8ddd;
+  border: 2px solid #004d9109;
+  background: #004d91a9;
   outline: none;
   color: #fff;
   font-size: 20px;
@@ -626,19 +644,52 @@ nav{
 }
 .wrapper .btns button:hover{
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
-  border: 2px solid #5e70d6;
-  background: #5e70d6;
+  
+  background: #004d91f8;
+  border: 2px solid #004d91a8;
 }
 
 /*******************************************************/
-.custfooter{
+.stunav{
+  box-shadow:  0 3px 6px 0px black;
+  background:#002131;
+  padding-top:4px;
+  padding-bottom:4px;
+}
+.mappane{
+  background-color: #002131;
+  color:whitesmoke;
+  max-width: 300px;
+  flex-grow: 1;
+  height:100%;
+  text-align: center;
+  box-shadow: 3px 0px 5px 0 rgba(0,0,0,0.2);
 
 }
+.dashboard{
+  font-size: 12px;
+  color: whitesmoke;
+  padding: 19px;
+  /**box-shadow: inset 0 5px 5px #000000;*/
 
-.custfooter2{
-  font-size: 16px;
-  color: #9e9e9e;
-  background-color: #383838;
-  padding:18px;
-  text-align: center;
+}
+.Csections{
+  width:100%;
+  border-style: groove;
+  border-color: #0a3047;
+  border-top-width: 2px;
+  text-align: left;
+  padding-left: 30px;
+}
+.Csections input,p{
+  background-color:transparent;
+  padding: 12px;
+  letter-spacing: 1.5px;
+  outline: none;
+  color: #d0dde7ec;
+  margin-left: 15px;
+
+}
+.Csections *{
+  color: #d0dde783;
 }

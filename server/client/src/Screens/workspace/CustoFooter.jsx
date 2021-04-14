@@ -13,9 +13,9 @@ const CustoFooter=()=>{
 
     return(
         <>
-<div class="footer" style={{marginTop:'60px'}}>
+<div class="footer" style={{marginTop:'60px',paddingTop:'30px', paddingBottom:'10px'}}>
     <div style={{display:'flex', flexFlow: 'row wrap', gap: '10px' }}>
-      <div style={{flexGrow:'1',textAlign:'center',color:"#676770"}}>
+      <div class="sectionSubHead" style={{flexGrow:'1',textAlign:'center',color:"#676770"}}>
         <h6>About Me</h6>
         <textarea class="inpBox" id="about"
           type="textarea" 
@@ -23,7 +23,7 @@ const CustoFooter=()=>{
           onChange={handleChange('about')} value={about}/>
 
       </div>
-      <div style={{flexGrow:'1',textAlign:'center',color:"#676770"}}>
+      <div class="sectionSubHead" style={{flexGrow:'1',textAlign:'center',color:"#676770"}}>
        <h6>Contacts</h6>
        <textarea class="inpBox" id="contact"
           type="textarea" 

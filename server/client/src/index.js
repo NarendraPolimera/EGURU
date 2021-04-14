@@ -9,6 +9,7 @@ import ForgetPassword from './Screens/ForgetPassword';
 import ResetPassword from './Screens/ResetPassword';
 import ProtectedRoute from './ProtectedRoute'
 import Builder from './Screens/workspace/Builder';
+import CourseDesign from './Screens/workspace/CourseDesign';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -22,6 +23,7 @@ ReactDOM.render(
         <Route path='/users/password/forget' exact render={props =><ForgetPassword {...props}/>}/>
         <Route path='/users/password/reset/:token' exact render={props =><ResetPassword {...props}/>}/>
         <ProtectedRoute path='/builder' exact component={Builder} />
+        <ProtectedRoute path='/builder/coursedesign/:courseId' exact component={CourseDesign} />
         
       
       </Switch>

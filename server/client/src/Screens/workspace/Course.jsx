@@ -1,69 +1,50 @@
 import React from 'react';
-
+import { useHistory } from "react-router-dom";
 import Eye from '../../assets/eye.png';
 import Edit from '../../assets/edit.png';
 
 function Course(props) {
-
+  let history = useHistory();
   const CL = props.CourseList;
   function addCourse(e) {
-    let T = document.getElementById("Title");
-    let I = document.getElementById("id");
-    props.listing(CL => [...CL, { title: T.value, id: I.value }]);
-    T.value = '';
-    I.value = '';
+    let k=CL[CL.length-1].id;
+    props.listing(CL => [...CL, { id: k+1 }]);
+
     console.log(CL);
   }
 
 
   return (
     <>
-      <div>
-        {CL.map(C => (
-          <div key={C.id} >
-            <h2>{C.title}</h2>
-            <button onClick={() => props.edit(C)}>edit</button>
-          </div>
-        ))}
-      </div>
-      <div>
-        <input
-          type="text"
-          required
-          id="Title"
-          placeholder="Title"
-        />
-        <input
-          type="text"
-          required
-          id="id"
-          placeholder="id"
-        />
-        <button onClick={addCourse}>Add Course</button>
-      </div>
-      <div style={{ display: 'flex', flexFlow: 'row wrap', gap: '80px' }}>
-        <div class="courseCard">
+      
+      <div style={{ display: 'flex', flexFlow: 'row wrap', gap: '100px', justifyContent:'center', position:'static' }}>
+        {CL.map(C=>(
+         
+         <div class="courseCard" key={C.id}>
           <div class="image">
             <img src="https://picsum.photos/300" alt="" />
           </div>
 
           <div class="wrapper">
             <input class="inpBox" id="cTitle"
-              placeholder="course name" />
+              placeholder="course name" value={C.Title}/>
             <textarea class="inpBox"
-              placeholder="course description" />
+              placeholder="course description" value={C.Descript}/>
             <table class="ctable">
               <tr><td>Duration</td><td>0 hrs</td></tr>
               <tr><td>Ratings</td><td>0 %</td></tr>
               <tr><td>Enrolled</td><td>0 </td></tr>
             </table>
             <div class="btns">
-              <button><img src={Edit} alt='edit' /></button>
-              <button><img src={Eye} alt='view' /></button>
+              <button title="Edit Course" onClick={() => history.push('builder/coursedesign/'+C.id)} ><img src={Edit} alt='edit' /></button>
+              <button title="View Course"><img src={Eye} alt='view' /></button>
             </div>
           </div>
         </div>
-        <div class="addCourse">+</div>
+
+        ))}
+        <div style={{width:'270px',height:'300px'}}>
+        <button class="addCourse" onClick={addCourse} title="Add New Course">+</button></div>
       </div>
 
 
