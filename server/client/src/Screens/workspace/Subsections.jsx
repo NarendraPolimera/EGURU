@@ -5,14 +5,14 @@ const SubSection=()=>{
   
     return(
         <>
-       
+        <div class="sscont">
         <div class='subsect'>
-            <i class="fa fa-caret-right"/>
             <input placeholder="Section Name"/>
-            <i class="fas fa-trash" ></i>
+            <i class="far fa-times-circle"></i>
         </div>
         <div class='subsect'>
-            <p style={{marginLeft:'0px'}}><i class="fas fa-plus-circle"></i> &nbsp;&nbsp;Add New Section</p>
+            <p style={{marginLeft:'0px',marginBottom:'0px'}}><i class="fas fa-plus-circle"></i> &nbsp;&nbsp;Add Content</p>
+        </div>
         </div>
         </>);
     }

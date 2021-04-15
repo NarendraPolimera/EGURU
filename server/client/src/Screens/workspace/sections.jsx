@@ -7,12 +7,12 @@ const Sections=()=>{
     return(
         <>
         <div>
-        <div class='Csections'>
+            <div class='Csections'>
             <i class="fa fa-caret-right"/>
             <input placeholder="Section Name"/>
             <i class="fas fa-trash" ></i>
-        </div>
-                <Subsection/>
+            </div>
+            <Subsection/>
         </div>
         <div class='Csections'>
             
