@@ -482,6 +482,7 @@ nav{
   gap:0px;
   align-items: stretch;
   height: fit-content;
+  background: white;
 }
 .mainpage{
 	  overflow-y: initial;
@@ -490,7 +491,7 @@ nav{
     align-items: center;
     order: 1;
     flex-grow: 1;  
-    background: white;
+    
     height: 100%;
     border: none; 
     
@@ -507,7 +508,7 @@ nav{
 }
 .sidenav {
   
-    background-color: white;
+    background-color: transparent;
     transition: .3s;
     margin-top: 32px;
     margin-bottom: 32px;
@@ -655,16 +656,21 @@ box-shadow: 0px 0px 8px 0 #BEBEBE;
   background:#002131;
   padding-top:4px;
   padding-bottom:4px;
+  z-index: 2;
 }
 .mappane{
   background-color: #002131;
   color:whitesmoke;
   max-width: 300px;
   flex-grow: 1;
-  height: 100%;
+  height: inherit;
   text-align: center;
   box-shadow: 2.5px 0px 4.5px 0 rgba(0, 0, 0, 0.829);
+  overflow-y: scroll;
 
+}
+.mappane::-webkit-scrollbar{
+  display: none;
 }
 .dashboard{
   font-size: 12px;
@@ -730,20 +736,48 @@ box-shadow: 0px 0px 8px 0 #BEBEBE;
   max-width: 100%;
   padding: 30px 45px;
   align-content: center;
+  overflow-y: scroll;
 }
+.coursecont::-webkit-scrollbar {
+  display: none;
+}
+
 .coursecont i{
   font-size: 21px;
   color: #b6c4ce;
   margin: 10px 10px;
 }
+
 .contBox{
   position: relative;
+  z-index: 1;
+  text-align: center;
+  line-height: 350px;
   background-color: white;
   max-width:650px;
   height: 350px;
   margin: 31px auto;
-  
+  padding:auto;
   box-shadow: 0 0 8px 0 #BEBEBE;
+}
+.contBox i{
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.5;
+  font-size: 40px;
+  margin: 25px;
+  transition: 100ms ease-in-out;
+}
+#like{
+  font-size: 16px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  line-height: 0.5;
+}
+.contBox i:hover{
+  color: #5a6064;
+  font-size: 50px;
 }
 
 .feedback{

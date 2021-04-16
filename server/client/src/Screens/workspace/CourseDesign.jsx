@@ -13,7 +13,7 @@ function CourseDesign(props) {
       <>
       <NaviDesgn/>
       <StuNav/>
-      <div style={{display:'flex', flexWrap:'row wrap', height:'550px', background: 'linear-gradient(to top, rgb(245, 245, 245), white)'}}>
+      <div style={{display:'flex', flexWrap:'row wrap', maxHeight:'580px', background: 'linear-gradient(to top, rgb(245, 245, 245), white)'}}>
         <MapPane/>
         <Content/>
       </div>
