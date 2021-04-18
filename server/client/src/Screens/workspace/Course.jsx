@@ -5,11 +5,10 @@ import Edit from '../../assets/edit.png';
 
 function Course(props) {
   let history = useHistory();
-  const CL = props.CourseList;
+  const CL = props.Courses.CourseList;
   function addCourse(e) {
     let k=CL[CL.length-1].id;
-    props.listing(CL => [...CL, { id: k+1 }]);
-
+    props.Courses.listing(CL => [...CL, { id: k+1 }]);
     console.log(CL);
   }
 
@@ -37,7 +36,7 @@ function Course(props) {
             </table>
             <div class="btns">
               <button title="Edit Course" onClick={() => history.push('builder/coursedesign/'+C.id)} ><img src={Edit} alt='edit' /></button>
-              <button title="View Course"><img src={Eye} alt='view' /></button>
+              <button title="View Course" onClick={() => history.push('builder/courseview/'+C.id)} ><img src={Eye} alt='view' /></button>
             </div>
           </div>
         </div>

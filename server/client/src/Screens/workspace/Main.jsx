@@ -2,26 +2,14 @@ import React, { useState } from 'react';
 //import { Link } from 'react-router-dom';
 
 import Course from './Course';
-import CourseDesign from './CourseDesign';
 
-const Main=()=>{
-  const [formData, setFormData] = useState({ introtxt:'',conctxt:'' });
-    const { introtxt,conctxt } = formData;
+const Main=(props)=>{
+  
+    const { introtxt,conctxt } = props.formData;
+    const handleChange=props.handleChange;
+    
+  
 
-    const handleChange = text => e => {
-        setFormData({ ...formData, [text]: e.target.value });
-    }
-
-  const [CourseList, listing] = useState([{id:0}]);
-  const [page, change] = useState(0);
-  const [cname, changename] = useState({});
-  function edit(e){
-    changename(e);
-    change(1);
-  }
-  function back(e){
-    change(0);
-  }
     return(
         <>
         <div class='mainpage'>
@@ -30,7 +18,7 @@ const Main=()=>{
           placeholder="Say Something.." 
           onChange={handleChange('introtxt')} value={introtxt}/>
           <div class="container" style={{maxWidth:'850px', alignItems:'center'}}>
-            <Course CourseList={CourseList} listing={listing} edit={edit}/>
+            <Course Courses={props.Courses}/>
           </div>
 
           <textarea class="inpBox" id='conctxt'

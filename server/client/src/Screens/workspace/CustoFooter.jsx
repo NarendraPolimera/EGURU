@@ -2,14 +2,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const CustoFooter=()=>{
+const CustoFooter=(props)=>{
 
-    const [formData, setFormData] = useState({ about:'',contacts:'' });
-    const { about, contacts } = formData;
-
-    const handleChange = text => e => {
-        setFormData({ ...formData, [text]: e.target.value });
-    }
+    
+    const { about, contacts } = props.formData;
+    const handleChange=props.handleChange;
 
     return(
         <>

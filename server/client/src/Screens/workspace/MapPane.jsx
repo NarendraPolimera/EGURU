@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sections from './sections';
 //import { Link } from 'react-router-dom';
 
-const MapPane=()=>{
+const MapPane=(props)=>{
   
     return(
         <>

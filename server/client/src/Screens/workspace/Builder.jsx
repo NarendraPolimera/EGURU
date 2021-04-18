@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NaviDesgn from './NaviDesgn';
 import Banner from './Banner';
 import Sidepane from './sidepane';
@@ -7,20 +7,35 @@ import Footer from './CustoFooter';
 import '../App.css';
 
 function Builder() {
-  
 
-  
+  const [formData, setFormData] = useState({ title: '', tagline: '', author: '', descript:'' });
+  const handleChange = text => e => {
+    setFormData({ ...formData, [text]: e.target.value });
+    console.log(formData);
+  }
+
+  const [mainData, setMainData] = useState({ introtxt:'',conctxt:'' });
+  const handleMain = text => e => {
+    setMainData({ ...mainData, [text]: e.target.value });
+   }
+  const [CourseList, listing] = useState([{id:0}]);
+
+  const [footerData, setFooterData] = useState({ about:'',contacts:'' });
+  const handleFooter = text => e => {
+    setFooterData({ ...footerData, [text]: e.target.value });
+}
+
   return (
     <>
     <NaviDesgn/>
-    <Banner/>
+    <Banner formData={formData} handleChange={handleChange}/>
     <div>
       <div class='content'>
-        <Main/>
+        <Main formData={mainData} handleChange={handleMain} Courses={{CourseList, listing}}/>
         <Sidepane/>
       </div>
     </div>
-    <Footer/>
+    <Footer formData={footerData} handleChange={handleFooter}/>
     </>
     );
 }

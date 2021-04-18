@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 //import { Link } from 'react-router-dom';
 
-const Banner=()=>{
-    const [formData, setFormData] = useState({ title: '', tagline: '', author: '', descript:'' });
-    const { title, tagline, author, descript } = formData;
-
-    const handleChange = text => e => {
-        setFormData({ ...formData, [text]: e.target.value });
-    }
+const Banner=(props)=>{
+    
+    const { title, tagline, author, descript } = props.formData;
+    const handleChange=props.handleChange;
+    
 
     return(
         <>
