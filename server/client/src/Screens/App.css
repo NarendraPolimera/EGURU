@@ -1,6 +1,10 @@
 *{
     font-family: 'Open Sans', sans-serif;
 }
+Link:hover{
+  text-decoration: none;
+  
+}
 nav{
     display:block;
     height: fit-content;
@@ -110,6 +114,8 @@ nav{
   
   .button:hover {
     background-color: #2e9dff;
+    text-decoration: none;
+    color: white;
   }
   
  
@@ -140,6 +146,7 @@ nav{
   .hollow-button:hover {
     border-color: #2e9dff;
     color: #2e9dff;
+    text-decoration: none;
   }
   
   .section {

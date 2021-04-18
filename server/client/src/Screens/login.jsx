@@ -48,7 +48,6 @@ const Login = ({history}) => {
     {
     return (
         <>
-        {isAuth()!==false ? <Redirect to='/' /> : null}
             <ToastContainer />
             <Navig/>
             <div class="section" style={{paddingTop:"70px"}}>
@@ -95,7 +94,7 @@ const Login = ({history}) => {
     }
     else
     {
-        return(<Redirect to='/' />);
+        return(<Redirect to='/builder' />);
     }
 }
 

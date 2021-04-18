@@ -8,7 +8,7 @@ import Navig from './Navigator';
 import Footer from './Footer';
 import './App.css';
 
-const ResetPassword = ({match}) =>{
+const ResetPassword = ({match, history}) =>{
 
     const [formData, setFormData]=useState({password1:'',password2:'',token:''});
     const {password1,password2,token}=formData;
@@ -32,7 +32,9 @@ const ResetPassword = ({match}) =>{
             axios.put(`${process.env.REACT_APP_API_URL}/password/reset`, {newPassword:password1, resetPasswordLink:token})
             .then(res=>{
                 setFormData({...formData,password1:'',password2:''});
-                toast.success(res.data.message)
+                toast.success(res.data.message);
+                history.push('/login');
+
             })
             .catch(err=>{
                 toast.error(`${err.response.data.error}`);
@@ -45,6 +47,8 @@ const ResetPassword = ({match}) =>{
             toast.error('incorrect passwords');
         }
     };
+    if(isAuth()===false)
+    {
     return(
       <>
       <ToastContainer />
@@ -82,6 +86,11 @@ const ResetPassword = ({match}) =>{
             <Footer/>
       </>
     );
+  }
+  else
+  {
+      return(<Redirect to='/builder' />);
+  }
 } 
 export default ResetPassword;
 

@@ -32,6 +32,9 @@ const userSchema=new mongoose.Schema(
         }
     },
     {
+        collection: 'teacherAuth'
+    },
+    {
         timeStamp:true
     }
 );

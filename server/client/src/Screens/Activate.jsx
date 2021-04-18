@@ -3,15 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { isAuth } from '../helpers/auth';
+import { authenticate, isAuth } from '../helpers/auth';
 import { Redirect, Link } from 'react-router-dom';
 import Navig from './Navigator';
 import Footer from './Footer';
 import './App.css';
 
 
-const Activate = ({ match }) => {
+const Activate = ({ match, history }) => {
     const [formData, setFormData] = useState({ name: '', token: '', show: true });
+    
+    const { name, token, show } = formData;
     useEffect(() => {
         //get token from params and decode it to extract the name
         let token = match.params.token;
@@ -23,7 +25,6 @@ const Activate = ({ match }) => {
 
     }, [match.params]);
 
-    const { name, token, show } = formData;
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -31,7 +32,10 @@ const Activate = ({ match }) => {
             .then(res => {
                 setFormData({ ...formData, show: false });
                 console.log(res.data);
-                toast.success(res.data.message);
+                authenticate(res,()=>{
+                    toast.success(res.data.message);
+                    isAuth()? history.replace('/builder'): history.replace('/');
+                })
             })
             .catch(err => {
                 toast.error(err.response.data.error);
@@ -40,7 +44,7 @@ const Activate = ({ match }) => {
 
     return (
         <>
-        {isAuth() ? <Redirect to='/' /> : null}
+        {isAuth() ? <Redirect to='/builder' /> : null}
         <ToastContainer />
         <Navig/>
           <div class="section" style={{paddingTop:"70px"}}>
@@ -52,8 +56,7 @@ const Activate = ({ match }) => {
                   
                   <button type='submit' class="button" style={{width:"100%", margin:"0px", marginBottom:"20px"}}>Activate your Account</button>
             </form>
-            <br /><br /><br />
-            <div class="para">or Register Again</div><br />
+            <div class="para">or register again .</div><br />
             <div style={{flexGrow:"1", minWidth:"fit-content"}}>
                   <Link to='/register' class="link-button">Sign Up</Link>
               </div>

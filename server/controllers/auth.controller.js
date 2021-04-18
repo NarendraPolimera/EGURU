@@ -26,11 +26,14 @@ exports.registerController=(req,res)=>{
         .exec((error,user)=>{
             //check if user exists
             if(user)
+            {
+                console.log('user found');
                 return res.status(400).json( {error:"Email is already in use"} );
-        });
 
-        //generate activation token
-        const token= jwt.sign({name,email,password}, process.env.JWT_ACC_ACTV, {expiresIn:'10m'});
+            }
+            else{
+        //generate activation token 
+        const token= jwt.sign({name,email,password}, process.env.JWT_ACC_ACTV, {expiresIn:'10m'});  /// private key + HMAC SHA256
 
         const emailData={
             from: process.env.EMAIL_FROM,
@@ -44,12 +47,17 @@ exports.registerController=(req,res)=>{
         }
         sgMail.send(emailData)
         .then(sent => {
+            console.log('email sent');
             return res.json({ message: `Email has been sent to ${email}` });
             })
         .catch(err => {
             console.log(err);
             return res.status(400).json({ success: false, errors: errorHandler(err)});
             });
+            }
+        });
+
+        
     }
 };
 
@@ -77,7 +85,10 @@ exports.activationController=(req,res)=>{
                         }
                         else
                         {
-                            return res.json({success:true, message:'Sign up success'});
+                            //generate token
+                            const token= jwt.sign( { _id:user._id}, process.env.JWT_SECRET, {expiresIn:'1d'});
+                            const {_id,name,email,role}= user;
+                            return res.json({success:true, message:'Sign up success',token, user:{_id,name,email,role}});
                         }
                     });
                 }
@@ -85,7 +96,7 @@ exports.activationController=(req,res)=>{
     }
     else
     {
-        return res.json({message:'error occured, try again'});
+        return res.status(401).json({error:'error occured, try again'});
     }
     
 };
@@ -113,12 +124,12 @@ exports.loginController =(req,res)=>{
             return res.status(400).json({error:'incorrect password'});
         }
 
-        //generate token
+        //generate tokenex
         const token= jwt.sign( { _id:user._id}, process.env.JWT_SECRET, {expiresIn:'1d'});
         const {_id,name,email,role}= user;
         return res.json({token, user:{_id,name,email,role}});
 
-    })
+    });
 };
 
 
@@ -146,7 +157,7 @@ exports.forgetController=(req,res)=>{
             to:email,
             subject:'Password Reset Link',
             html:`
-            <h1>please click to rset your password</h>
+            <h1>please click to reset your password</h>
             <p>${process.env.CLIENT_URL}/users/password/reset/${token}</p>
             <p>This email contains sensitive data</p>
             <p>${process.env.CLIENT_URL}</p>`
@@ -180,18 +191,25 @@ exports.resetController=(req,res)=>{
         return res.status(422).json({error:firstError});
     }
     const {newPassword, resetPasswordLink}= req.body;
+    console.log(newPassword, resetPasswordLink)
     if(resetPasswordLink)
     {
-        jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASS, function (err, decoded){
+        jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASS, function (err, decoded)
+        {
+            console.log('lord help me please');
             if(err)
             {
-                return res.json(400).json({error:'Expired link, please try again'});
+                return res.status(400).json({error:'Expired link, please try again'});
             }
+            else
+            {
             User.findOne({resetPasswordLink},(err,user)=>{
                 if(err || !user)
                 {
+                    console.log('err');
                     return res.status(400).json({error: 'Something went wrong'});
                 }
+                else{
                 const updatedFields={ password:newPassword, resetPasswordLink:''};
                 user=_.extend(user, updatedFields);
                 user.save((err,result)=>{
@@ -199,10 +217,14 @@ exports.resetController=(req,res)=>{
                     {
                         return res.status(400).json({error:'Error reseting the password'});
                     }
+                    else{
+                    console.log('done')
                     return res.json({message: "Updated the new password"});
-                })
+                    }
+                });
+                }
             });
-
+            }
         });
     }
 

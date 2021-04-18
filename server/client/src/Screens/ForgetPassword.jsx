@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import Navig from './Navigator';
 import Footer from './Footer';
+import {  Redirect } from 'react-router-dom';
+import {  isAuth } from '../helpers/auth';
 import './App.css';
 
 
@@ -18,7 +20,6 @@ const ForgetPassword = ({ history }) => {
     const handleSubmit = e => {
         e.preventDefault();
         if (email) {
-            setFormData({ ...formData, textChange: 'Submitting' });
             axios.put(`${process.env.REACT_APP_API_URL}/password/forgot`, { email })
                 .then(res => {
                     setFormData({ ...formData, email: '' });
@@ -32,6 +33,8 @@ const ForgetPassword = ({ history }) => {
             toast.error('Please provide your email');
         }
     };
+    if(isAuth()===false)
+    {
     return (
         <>
         <ToastContainer />
@@ -65,6 +68,11 @@ const ForgetPassword = ({ history }) => {
         </>
         
     );
+    }
+    else
+    {
+      return(<Redirect to='/builder' />);
+    }
 };
 
 export default ForgetPassword;

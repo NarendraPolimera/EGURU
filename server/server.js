@@ -37,7 +37,7 @@ app.listen(PORT,()=>{
 connectDB();
 
 //using bodyParser
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 
 

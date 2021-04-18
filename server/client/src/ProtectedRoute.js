@@ -10,8 +10,7 @@ class ProtectedRoute extends Component {
         {...props} 
         render={props => (
           isAuth()!==false ?
-            <Component {...props} /> : <Component {...props} />
-            /**<Redirect to='/login' />*/
+            <Component {...props} /> : <Redirect to='/login' />
         )} 
       />
     )

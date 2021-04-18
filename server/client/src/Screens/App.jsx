@@ -18,8 +18,8 @@ function App() {
           <div class="heading">EGURU</div>
           <div class="subheading">HOST YOUR COURSE PAGE INDEPENDENTLY</div>
         <div>
-          <button class="button" >SIGN UP</button>
-          <button class="hollow-button">START DESIGNING</button>
+          <Link class="button" role="button" to='/register'>SIGN UP</Link>
+          <Link class="hollow-button" role="button" to='/builder'>START DESIGNING</Link>
         </div>
       </div>
     </div>

@@ -1,8 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { signout } from '../../helpers/auth';
 
 const Sidepane=()=>{
+    const history = useHistory();
 
+    const logout=e=>{
+        e.preventDefault();
+        alert("Logging out..");
+        signout();
+        history.replace('/');
+
+    }
     return(
         <>
         <div  class="sidenavContainer">
@@ -11,7 +20,7 @@ const Sidepane=()=>{
         <Link href="#services">Statistics</Link>
         <Link href="#clients">Change Domain</Link>
         <Link href="#contact">Update Profile</Link>
-        <Link href="#contact">Log Out</Link>
+        <Link href="#contact" onClick={logout}>Log Out</Link>
         <br />
         <Link href="#contact">Guide</Link>
         <Link href="#contact">Contact Us</Link>

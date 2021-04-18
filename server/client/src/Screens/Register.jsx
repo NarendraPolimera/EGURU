@@ -37,7 +37,6 @@ function Register({history}) {
                 .then(res=>{
                     setFormData({...formData, name: '', email: '', password1: '', password2: ''});
                     toast.success(res.data.message);
-                    history.push('/builder');
                 })
                 .catch(err => {
                     setFormData({
@@ -48,8 +47,8 @@ function Register({history}) {
                       password2: '',
                       textChange: 'Sign Up'
                     });
-                    console.log(err.response);
-                    toast.error(err.response.data.errors);
+                    console.log(err);
+                    toast.error(err.response.data.error);
                   });
                 
             }
@@ -65,7 +64,7 @@ function Register({history}) {
     }
     return (
         <>
-        {isAuth() ? <Redirect to='/' /> : null}
+        {isAuth() ? <Redirect to='/builder' /> : null}
         <ToastContainer />
         <Navig/>
         <div class="section" style={{paddingTop:"70px"}}>
