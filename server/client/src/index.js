@@ -25,7 +25,6 @@ ReactDOM.render(
         <ProtectedRoute path='/builder' exact component={Builder} />
         <ProtectedRoute path='/builder/coursedesign/:courseId' exact component={CourseDesign} />
         
-      
       </Switch>
     </BrowserRouter>,
   document.getElementById('root')

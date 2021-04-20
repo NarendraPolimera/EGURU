@@ -9,7 +9,7 @@ const MapPane=(props)=>{
         <div class='mappane'>
         <div class="sectionSubHead dashboard">Dashboard</div>
         <div>
-            <Sections/>
+            <Sections {...props}/>
         </div>
         </div>
         </>);

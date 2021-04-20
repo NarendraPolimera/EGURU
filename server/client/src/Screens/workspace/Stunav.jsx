@@ -12,7 +12,7 @@ const Stunav=()=>{
         <nav class="navbar navbar-expand-sm stunav">
         <div class="container">
         <ul class="mr-auto" style={{marginTop:"-3px"}}> 
-              <li style={{display: "inline"}}><Link to="/"  class="Brand" style={{color:'white'}}>Course Title</Link></li>
+              <li style={{display: "inline"}}><Link to="#"  class="Brand" style={{color:'white'}}>Course Title</Link></li>
               </ul>
   
           <ul class="ml-auto" style={{marginTop:"-3px"}}> 
