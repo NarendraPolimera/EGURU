@@ -43,9 +43,11 @@ app.use(bodyParser.json());
 
 //loading routes
 const authRouter=require('./routes/auth.route');
+const builderRouter=require('./routes/builder.route');
 
 //use route
 app.use('/api/',authRouter);
+app.use('/api/builder',builderRouter);
 
 
 //no routes available

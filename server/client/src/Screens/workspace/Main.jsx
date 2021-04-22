@@ -18,7 +18,7 @@ const Main=(props)=>{
           placeholder="Say Something.." 
           onChange={handleChange('introtxt')} value={introtxt}/>
           <div class="container" style={{maxWidth:'850px', alignItems:'center'}}>
-            <Course Courses={props.Courses}/>
+            <Course {...props}/>
           </div>
 
           <textarea class="inpBox" id='conctxt'

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 const Banner=(props)=>{
     
-    const { title, tagline, author, descript } = props.formData;
+    const { title, tag, author, descript } = props.formData;
     const handleChange=props.handleChange;
     
 
@@ -20,7 +20,7 @@ const Banner=(props)=>{
           <textarea class="inpBox" id="tagline"
           type="textarea" 
           placeholder="add tagline" 
-          onChange={handleChange('tagline')} value={tagline}/>
+          onChange={handleChange('tag')} value={tag}/>
           </div>
           <div style={{width:'fit-content', flexGrow:"1",display:'flex', flexDirection:'column', justifyContent:'flex-end', flexWrap:'wrap', columnGap:'0px'}}>
          <input class="inpBox" id="author"

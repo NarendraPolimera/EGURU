@@ -703,8 +703,11 @@ box-shadow: 0px 0px 8px 0 #BEBEBE;
   margin-left: 15px;
 
 }
-.Csections *{
-  color: #d0dde783;
+.Csections i{
+  color: #bcc8d183;
+}
+.Csections i:hover{
+  color: #ccd8e2;
 }
 
 
@@ -719,10 +722,7 @@ box-shadow: 0px 0px 8px 0 #BEBEBE;
   background-size: 3px 3px;
   border-bottom: #020b1fbe;
   border-bottom-width: 1px ;
-  border-style: dotted;/**
-  border-bottom: #0315206b;
-  border-bottom-width: 1px ;
-  border-style: ridge;*/
+  border-style: dotted;
 }
 .subsect input,p{
   background-color:transparent;
@@ -735,6 +735,9 @@ box-shadow: 0px 0px 8px 0 #BEBEBE;
   color: #d0dde783;
 }
 .subsect *:hover{
+  color: whitesmoke;
+}
+.subsect:active{
   color: whitesmoke;
 }
 

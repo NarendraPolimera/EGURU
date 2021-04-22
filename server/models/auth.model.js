@@ -29,7 +29,11 @@ const userSchema=new mongoose.Schema(
         resetPasswordLink:{
             data:String,
             default:''
-        }
+        },
+        pageId:{
+            data:String,
+            default:''
+        },
     },
     {
         collection: 'teacherAuth'

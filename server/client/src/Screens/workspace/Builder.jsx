@@ -4,38 +4,67 @@ import Banner from './Banner';
 import Sidepane from './sidepane';
 import Main from './Main';
 import Footer from './CustoFooter';
+import useFetch from '../../useFetch';
+import { isAuth } from '../../helpers/auth';
+import axios from 'axios';
 import '../App.css';
 
 function Builder() {
-
-  const [formData, setFormData] = useState({ title: '', tagline: '', author: '', descript:'' });
+ 
+  const [load, setload]=useState(1);
+  const [formData, setFormData]= useState({title:'', tag:'', author:'', descript:'', introtxt:'',conctxt:'',about:'',contacts:''});
+  const [PageId, pagit] = useState('');
+  const [CourseList, listing] = useState([]);
   const handleChange = text => e => {
     setFormData({ ...formData, [text]: e.target.value });
     console.log(formData);
   }
+  const token=isAuth().token;
+  const { data, error} = useFetch('/builder/pageinfo',{token});
+  if(data && load)
+  {  
+    setFormData(data.pageDetails);
+    setload(0);
+    console.log(formData);
+    pagit(data.pageDetails._id);
+    if(data.pageDetails.courses.length!==0)
+    {
+      listing(data.pageDetails.courses);
+    }
+  }
+  function save()
+  {
+    axios.post(`${process.env.REACT_APP_API_URL}/builder/updatePage`, formData)
+      .then(res => {
+        console.log(res.data);
+        alert('saved');
+      })
+      .catch(err => {
+         alert('oops eror occured!');
+          console.log(err.message);
+        }
+      );
+      
+  }
+  const courseChange=(ind, field)=> (event)=>{
+    let newArr = [...CourseList]; 
+    newArr[ind] = {...newArr[ind], [field]:event.target.value};
+    listing(newArr);
+    console.log(CourseList);
+  }
 
-  const [mainData, setMainData] = useState({ introtxt:'',conctxt:'' });
-  const handleMain = text => e => {
-    setMainData({ ...mainData, [text]: e.target.value });
-   }
-  const [CourseList, listing] = useState([{id:0}]);
-
-  const [footerData, setFooterData] = useState({ about:'',contacts:'' });
-  const handleFooter = text => e => {
-    setFooterData({ ...footerData, [text]: e.target.value });
-}
 
   return (
     <>
-    <NaviDesgn/>
+    <NaviDesgn save={save}/>
     <Banner formData={formData} handleChange={handleChange}/>
     <div>
       <div class='content'>
-        <Main formData={mainData} handleChange={handleMain} Courses={{CourseList, listing}}/>
+        <Main formData={formData} handleChange={handleChange} Courses={{CourseList, listing, PageId, courseChange}}/>
         <Sidepane/>
       </div>
     </div>
-    <Footer formData={footerData} handleChange={handleFooter}/>
+    <Footer formData={formData} handleChange={handleChange}/>
     </>
     );
 }
