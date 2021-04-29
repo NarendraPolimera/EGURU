@@ -3,7 +3,9 @@ import NaviDesgn from './NaviDesgn';
 import StuNav from './Stunav';
 import { useParams } from "react-router";
 import MapPane from './MapPane';
+import axios from 'axios';
 import Content from './CourseCont';
+import useFetch from '../../useFetch';
 
 const rdmap={
   sections:['Getting Started'],
@@ -16,7 +18,12 @@ function reducer(state, action) {
  
   switch (action.type) {
 
+    case 'initialize':
+      const {sectionName, subcontents, contents}=action.payload;
+      return {sections:sectionName, subsections:subcontents, content:contents, selected:[0,0]};
+
     case 'addNewSection':
+      ///need to update content: tooooo...
       return { ...state, sections:[...state.sections,'Name Section'], subsections:[...state.subsections,['Name Content']]};
 
     case 'addNewContent':
@@ -51,6 +58,7 @@ function reducer(state, action) {
 
     case 'select':
       let sel=action.payload;
+      console.log(state);
       return {...state, selected:[sel[0], sel[1]]};
 
     case 'selectprev':
@@ -84,17 +92,34 @@ function reducer(state, action) {
 
 function CourseDesign(props) {
   let { courseId } = useParams();
-
+  const [load, setload]=useState(0);
+  const [name, setn]=useState('Course Name');
  const [state, dispatch] = useReducer(reducer, rdmap);
-
+ const { data, error} = useFetch('/builder/courseinfo',{courseId});
+ if(data && !load)
+ {
+    setn(data.course.cname);
+    console.log(data.course.roadmap);
+    dispatch({type: 'initialize', payload:data.course.roadmap});
+    setload(1);
+ }
  function save(){
-   console.log(save);
+  axios.post(`${process.env.REACT_APP_API_URL}/builder/updateCourse`, {id:data.course._id, update:state})
+      .then(res => {
+        console.log(res.data);
+        alert('saved');
+      })
+      .catch(err => {
+         alert('oops eror occured!');
+          console.log(err.message);
+        }
+      );
  }
  
   return (
       <>
       <NaviDesgn  save={save}/>
-      <StuNav/>
+      <StuNav head={name}/>
       <div style={{display:'flex', flexWrap:'row wrap', maxHeight:'580px', background: 'linear-gradient(to top, rgb(245, 245, 245), white)'}}>
         <MapPane state={state} dispatch={dispatch}/>
         <Content state={state} dispatch={dispatch}/>

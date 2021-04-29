@@ -6,13 +6,13 @@ import Home from '../../assets/home2.png';
 
 import {  signout, isAuth } from '../../helpers/auth';
 
-const Stunav=()=>{
+const Stunav=(props)=>{
     return(
         <>
         <nav class="navbar navbar-expand-sm stunav">
         <div class="container">
         <ul class="mr-auto" style={{marginTop:"-3px"}}> 
-              <li style={{display: "inline"}}><Link to="#"  class="Brand" style={{color:'white'}}>Course Title</Link></li>
+              <li style={{display: "inline"}}><Link to="#"  class="Brand" style={{color:'white'}}>{props.head}</Link></li>
               </ul>
   
           <ul class="ml-auto" style={{marginTop:"-3px"}}> 

@@ -5,7 +5,7 @@ import Course from './Course';
 
 const Main=(props)=>{
   
-    const { introtxt,conctxt } = props.formData;
+    const { introTxt,concTxt } = props.formData;
     const handleChange=props.handleChange;
     
   
@@ -16,15 +16,15 @@ const Main=(props)=>{
         <textarea class="inpBox" id="introtxt" 
           type="textarea" 
           placeholder="Say Something.." 
-          onChange={handleChange('introtxt')} value={introtxt}/>
+          onChange={handleChange('introTxt')} value={introTxt}/>
           <div class="container" style={{maxWidth:'850px', alignItems:'center'}}>
-            <Course {...props}/>
+            {props.load && <Course {...props}/>}
           </div>
 
           <textarea class="inpBox" id='conctxt'
           type="textarea" 
           placeholder="Epilogue" 
-          onChange={handleChange('conctxt')} value={conctxt}/>
+          onChange={handleChange('concTxt')} value={concTxt}/>
         </div>
         </>);
     }

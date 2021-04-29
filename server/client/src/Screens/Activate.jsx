@@ -25,6 +25,7 @@ const Activate = ({ match, history }) => {
 
     }, [match.params]);
 
+    
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -34,7 +35,7 @@ const Activate = ({ match, history }) => {
                 console.log(res.data);
                 authenticate(res,()=>{
                     toast.success(res.data.message);
-                    isAuth()? history.replace('/builder'): history.replace('/');
+                    isAuth().token? history.replace('/builder'): history.replace('/');
                 })
             })
             .catch(err => {

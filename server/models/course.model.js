@@ -4,7 +4,7 @@ const { timeStamp } = require('console');
 var memdetails=new mongoose.Schema(
     {
         memid:{type:String, default:''},
-        name:{type:String, requied:true},
+        mname:{type:String, requied:true},
         expire:{type:Date, default: Date.now}
     }
 );
@@ -18,23 +18,24 @@ var coursedetails=new mongoose.Schema(
     {
         sectionName:[String],
         subcontents:[[String]],
-        contents:{
+        contents:[[{
             serialno:{type:Number, default:0},
             type:{type:String, default:''},
             link:{type:String, default:''},
             views:{type:Number, default:0},
             likes:{type:Number, default:0},
             feedback:[comments]
-        }
+        }]]
     }
     );
 const courseSchema=new mongoose.Schema(
     {
-            pageId:String,
-            name:{
+            
+            pageId:{type: String},
+            cname:{
                 type:String,
                 trim:true,
-                default:''
+                default:'course name'
             },
             descript:{
                 type:String,
@@ -45,7 +46,7 @@ const courseSchema=new mongoose.Schema(
             duration:{type:Number, default:0},
             rating:{type:mongoose.Schema.Types.Decimal128, default:0.0},
             members:[memdetails],
-            roadmap:[coursedetails]
+            roadmap:coursedetails
     },
     {
         collection: 'course'
@@ -54,13 +55,14 @@ const courseSchema=new mongoose.Schema(
         timeStamp:true
     }
 );
+courseSchema.set('autoIndex', false);
 courseSchema.pre("save",function(next) {
     if ( !this.roadmap || this.roadmap.length == 0 ) {
-      this.roadmap = [];
-      this.roadmap.push({
+      this.roadmap = {
         sectionName: ["Getting Started"],
         subcontents:[["Introduction"]],
-      })
+        contents:[[]]
+      };
     }
       next();
     });

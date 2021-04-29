@@ -11,7 +11,8 @@ import '../App.css';
 
 function Builder() {
  
-  const [load, setload]=useState(1);
+  const [load, setload]=useState(0);
+  const [cload, setcload]=useState(0);
   const [formData, setFormData]= useState({title:'', tag:'', author:'', descript:'', introtxt:'',conctxt:'',about:'',contacts:''});
   const [PageId, pagit] = useState('');
   const [CourseList, listing] = useState([]);
@@ -20,21 +21,44 @@ function Builder() {
     console.log(formData);
   }
   const token=isAuth().token;
+  console.log(token);
   const { data, error} = useFetch('/builder/pageinfo',{token});
-  if(data && load)
+  if(data && !load)
   {  
     setFormData(data.pageDetails);
-    setload(0);
-    console.log(formData);
     pagit(data.pageDetails._id);
+    setload(1);
+    console.log(formData);
+    
+  }
+  
+  if(!cload && load && data)
+  {
     if(data.pageDetails.courses.length!==0)
     {
-      listing(data.pageDetails.courses);
+      ///////////useFetch to get all coursesn
+      console.log(data.pageDetails.courses);
+      axios.post(`${process.env.REACT_APP_API_URL}/builder/courseheads`, {list:data.pageDetails.courses})
+      .then(res => {
+        console.log(res.data);
+        listing(res.data.cheads);
+        setcload(1);
+      })
+      .catch(err => {
+         alert('oops eror occured!');
+          console.log(err.message);
+        }
+      );
+    }
+    else{
+      setcload(1);
     }
   }
+
+  //on save button clicked
   function save()
   {
-    axios.post(`${process.env.REACT_APP_API_URL}/builder/updatePage`, formData)
+    axios.post(`${process.env.REACT_APP_API_URL}/builder/updatePage`, {pagdata:formData, clist:CourseList})
       .then(res => {
         console.log(res.data);
         alert('saved');
@@ -57,14 +81,14 @@ function Builder() {
   return (
     <>
     <NaviDesgn save={save}/>
-    <Banner formData={formData} handleChange={handleChange}/>
+    {load && <Banner formData={formData} handleChange={handleChange}/>}
     <div>
       <div class='content'>
-        <Main formData={formData} handleChange={handleChange} Courses={{CourseList, listing, PageId, courseChange}}/>
+        <Main formData={formData} handleChange={handleChange} load={cload} Courses={{CourseList, listing, PageId, courseChange}}/>
         <Sidepane/>
       </div>
     </div>
-    <Footer formData={formData} handleChange={handleChange}/>
+    {load && <Footer formData={formData} handleChange={handleChange}/>}
     </>
     );
 }

@@ -14,7 +14,7 @@ function Course(props) {
     addCourse();
   }
   function addCourse() 
-  {
+  { 
     axios.post(`${process.env.REACT_APP_API_URL}/builder/createCourse`,{pageId})
       .then(res => {
         console.log(res.data);
@@ -25,9 +25,11 @@ function Course(props) {
           console.log(err.message);
         }
       );
+      //props.Courses.listing(CL => [...CL, {cname:'', descript:''}]);
+
   }
   
-  console.log(CL);
+console.log(CL);
 /////////
 
   return (
@@ -43,7 +45,7 @@ function Course(props) {
 
           <div class="wrapper">
             <input class="inpBox" id="cTitle"
-              placeholder="course name" value={C.name} onChange={props.Courses.courseChange(index, 'name')}/>
+              placeholder="course name" value={C.cname} onChange={props.Courses.courseChange(index, 'cname')}/>
             <textarea class="inpBox"
               placeholder="course description" value={C.descript} onChange={props.Courses.courseChange(index, 'descript')}/>
             <table class="ctable">
@@ -52,8 +54,8 @@ function Course(props) {
               <tr><td>Enrolled</td><td>0 </td></tr>
             </table>
             <div class="btns">
-              <button title="Edit Course" onClick={() => history.push('builder/coursedesign/'+C._id)} ><img src={Edit} alt='edit' /></button>
-              <button title="View Course" onClick={() => history.push('builder/courseview/'+C._id)} ><img src={Eye} alt='view' /></button>
+              <button title="Edit Course" onClick={() => history.push('builder/coursedesign/'+C.id)} ><img src={Edit} alt='edit' /></button>
+              <button title="View Course" onClick={() => history.push('builder/courseview/'+C.id)} ><img src={Eye} alt='view' /></button>
             </div>
           </div>
         </div>

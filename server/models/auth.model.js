@@ -27,11 +27,11 @@ const userSchema=new mongoose.Schema(
             default:'Normal'
         },
         resetPasswordLink:{
-            data:String,
+            type:String,
             default:''
         },
         pageId:{
-            data:String,
+            type:String,
             default:''
         },
     },

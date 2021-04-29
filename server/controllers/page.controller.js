@@ -11,12 +11,14 @@ const jwt= require('jsonwebtoken');
 const {errorHandler}=require('../helpers/dbErrorHandling');            //custom error handler..
 const  sgMail= require('@sendgrid/mail');
 const { lte } = require('lodash');
+var async = require("async");
 sgMail.setApiKey(process.env.MAIL_KEY);
 
 exports.getpageController=(req,res)=>{
     
     const errors=validationResult(req);
-    const {token}=req.body
+    const {token}=req.body;
+    console.log(token);
     if(!errors.isEmpty())
     {
         const firstError= errors.array().map(error=>error.msg)[0];
@@ -88,7 +90,8 @@ exports.getpageController=(req,res)=>{
 exports.updatepageController=(req,res)=>{
     
     const errors=validationResult(req);
-    const newData=req.body;
+    const newData=req.body.pagdata;
+    const clist=req.body.clist;
     if(!errors.isEmpty())
     {
         const firstError= errors.array().map(error=>error.msg)[0];
@@ -104,9 +107,18 @@ exports.updatepageController=(req,res)=>{
                 console.log(err)
             }
             else{
-                return res.json({message:'successs'});
+                clist.map(C=>{
+                    Course.findByIdAndUpdate(C.id, {cname:C.cname, descript: C.descript},
+                        function (err, docs) {
+                            if (err){
+                                console.log(err)
+                            }
+                        });
+                });
+                return res.json({message:"success"})
             }
         });
+        
         
     }
 };
@@ -127,6 +139,7 @@ exports.createcourseController=(req,res)=>{
     {
         console.log(pageId);
         const course=new Course({pageId});
+        console.log(course);
         course.save((err,course)=>{
             if(err)
             {    console.log(err);
@@ -135,10 +148,115 @@ exports.createcourseController=(req,res)=>{
             else
             {
                 console.log(course);
+                const Cdoc={id: course._id, cname: course.cname, descript: course.descript};
+                Page.updateOne({_id:mongoose.Types.ObjectId(pageId)}, {$push:{courses:course._id}})
+                .exec((err, page)=>{
+                    if(err){
+                        return res.status(400).json({err:"something went wrong"});
+                    }
+                    else{
+                        return res.json({Cdoc});
+                    }
+                });
                 /////update page...with page.courses with course id
-                return res.json({Cdoc:course});
+                
             }
         });
         
+    }
+};
+
+////////////////////
+
+exports.getCourseHeads=(req,res)=>{
+    
+    const errors=validationResult(req);
+    const {list}=req.body;
+    if(!errors.isEmpty())
+    {
+        const firstError= errors.array().map(error=>error.msg)[0];
+        return res.status(422).json({error:firstError});
+    }
+    else
+    {
+        console.log('help lord');
+        var head = new Array();
+        const L=list.length-1;
+        console.log(L)
+        list.map((_id, index)=>{
+            Course.findOne({_id:mongoose.Types.ObjectId(_id)})
+                    .exec((error,course)=>{
+                    if(course)
+                    {
+                        console.log("ohh lord, help please");
+                        head.push({id:course._id, cname: course.cname, descript: course.descript});
+                       if(index===L)
+                       {
+                        return res.json({cheads:head});
+                       }
+                    }
+                    
+                })
+                    
+        })
+    }
+};
+
+/////////////////
+exports.getCourseDetails=(req,res)=>{
+    
+    const errors=validationResult(req);
+    const {courseId}=req.body;
+    if(!errors.isEmpty())
+    {
+        const firstError= errors.array().map(error=>error.msg)[0];
+        return res.status(422).json({error:firstError});
+    }
+    else
+    {
+        console.log('help lord', courseId);
+        Course.findOne({_id:mongoose.Types.ObjectId(courseId)})
+                .exec((error,course)=>{
+                if(course)
+                {
+                    console.log("ohh lord, help please");
+                    return res.json({course});
+                }
+                else{
+                    return res.status(400).json({error:'Course Missing'});
+
+                }
+                
+            })
+
+    }
+};
+
+/////////////////////////////
+
+exports.setCourseDetails=(req,res)=>{
+    
+    const errors=validationResult(req);
+    const {id, update}=req.body;
+    console.log(req.body);
+    if(!errors.isEmpty())
+    {
+        const firstError= errors.array().map(error=>error.msg)[0];
+        return res.status(422).json({error:firstError});
+    }
+    else
+    {
+        console.log(id, update);
+        Course.findByIdAndUpdate(id, {roadmap:{sectionName:update.sections, subcontents:update.subsections}},
+            function (err, docs) {
+                if (err){
+                    console.log(err);
+                    return res.status(422).json({error:'Something went wrong'});
+                }
+                else{
+                    return res.json({message:'updated'})
+                }
+            });
+   
     }
 };
