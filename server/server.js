@@ -44,10 +44,12 @@ app.use(bodyParser.json());
 //loading routes
 const authRouter=require('./routes/auth.route');
 const builderRouter=require('./routes/builder.route');
+const accessRouter=require('./routes/access.route');
 
 //use route
 app.use('/api/',authRouter);
 app.use('/api/builder',builderRouter);
+app.use('/api/access',accessRouter);
 
 
 //no routes available

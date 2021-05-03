@@ -1,6 +1,7 @@
 const User=require('../models/auth.model');
 const Page=require('../models/page.model');
 const Course=require('../models/course.model');
+const Profile=require('../models/profile.model');
 const mongoose=require('mongoose');
 const expressJwt=require('express-jwt');
 const _=require('lodash');
@@ -247,7 +248,7 @@ exports.setCourseDetails=(req,res)=>{
     else
     {
         console.log(id, update);
-        Course.findByIdAndUpdate(id, {roadmap:{sectionName:update.sections, subcontents:update.subsections}},
+        Course.findByIdAndUpdate(id, {roadmap:{sectionName:update.sections, subcontents:update.subsections, contents:update.content}},
             function (err, docs) {
                 if (err){
                     console.log(err);
@@ -258,5 +259,74 @@ exports.setCourseDetails=(req,res)=>{
                 }
             });
    
+    }
+};
+
+/////////////////////////////////////
+
+exports.getProfile=(req,res)=>{
+    
+    const errors=validationResult(req);
+    const {email}=req.body;
+    if(!errors.isEmpty())
+    {
+        const firstError= errors.array().map(error=>error.msg)[0];
+        return res.status(422).json({error:firstError});
+    }
+    else
+    {
+        console.log('help lord', email);
+        Profile.findOne({email})
+                .exec((error,profile)=>{
+                if(profile)
+                {
+                    return res.json({profile});
+                }
+                else{
+                    const profile=new Profile({email});
+                    profile.save((err,profile)=>{
+                    if(err)
+                    {   
+                        console.log(err);
+                        return res.status(400).json({error:errorHandler(err)});
+                    }
+                    else{
+                        return res.json({profile});
+                    }
+                    
+                    });
+
+                }
+                
+            })
+
+    }
+};
+
+
+exports.updateProfile=(req,res)=>{
+    
+    const errors=validationResult(req);
+    const {formData}=req.body;
+    if(!errors.isEmpty())
+    {
+        const firstError= errors.array().map(error=>error.msg)[0];
+        return res.status(422).json({error:firstError});
+    }
+    else
+    {
+        console.log('help lord', formData);
+        Profile.findByIdAndUpdate(formData._id, formData,
+        function (err, docs) {
+            if (err){
+                console.log(err);
+                return res.status(400).json({error:errorHandler(err)});
+
+            }
+            else{
+                return res.json({message:"success"})
+            }
+        });
+
     }
 };

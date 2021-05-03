@@ -10,7 +10,7 @@ import useFetch from '../../useFetch';
 const rdmap={
   sections:['Getting Started'],
   subsections:[['Introduction']],
-  content:[['link']],
+  content:[[{type:'',link:''}]],
   selected:[0,0]
 };
 
@@ -24,11 +24,12 @@ function reducer(state, action) {
 
     case 'addNewSection':
       ///need to update content: tooooo...
-      return { ...state, sections:[...state.sections,'Name Section'], subsections:[...state.subsections,['Name Content']]};
+      return { ...state, sections:[...state.sections,'Name Section'], subsections:[...state.subsections,['Name Content']], content:[...state.content,[{type:'',link:''}]]};
 
     case 'addNewContent':
       let ci=action.payload;
       state.subsections[ci]=[...state.subsections[ci],'Name Content'];
+      state.content[ci]=[...state.content[ci],{type:'',link:''}];
       return {...state};
 
     case 'sectionName':
@@ -47,18 +48,21 @@ function reducer(state, action) {
     case 'delsection':
         let s=action.payload;
         state.subsections.splice(s,1);
+        state.content.splice(s,1);
         state.sections.splice(s,1);
+        state.selected=[0,0];
         return {...state};
 
     case 'delcontent':
         let sin=action.payload[0];
         let cin=action.payload[1];
         state.subsections[sin].splice(cin,1);
+        state.content[sin].splice(cin,1);
+        state.selected=[0,0];
         return {...state};
 
     case 'select':
       let sel=action.payload;
-      console.log(state);
       return {...state, selected:[sel[0], sel[1]]};
 
     case 'selectprev':
@@ -81,9 +85,24 @@ function reducer(state, action) {
         ++nsel[0];
         nsel[1]=0;
       }
-      
       return {...state, selected:[nsel[0], nsel[1]]};
-
+    
+    case 'reset':
+      let sele=state.selected;
+      let nc=state.content;
+      nc[sele[0]][sele[1]]={type:'',link:''};
+      return {...state, content:nc};
+    
+    case 'setType':
+      let selea=state.selected;
+      state.content[selea[0]][selea[1]]={type:action.payload,link:''};
+      return {...state};
+    
+    case 'setLink':
+      let seleac=state.selected;
+      state.content[seleac[0]][seleac[1]]={...state.content[seleac[0]][seleac[1]],link:action.payload.target.value};
+      return {...state};
+      
     default:
       return state;
   }
@@ -103,7 +122,9 @@ function CourseDesign(props) {
     dispatch({type: 'initialize', payload:data.course.roadmap});
     setload(1);
  }
+ console.log(state);
  function save(){
+   
   axios.post(`${process.env.REACT_APP_API_URL}/builder/updateCourse`, {id:data.course._id, update:state})
       .then(res => {
         console.log(res.data);
@@ -119,7 +140,7 @@ function CourseDesign(props) {
   return (
       <>
       <NaviDesgn  save={save}/>
-      <StuNav head={name}/>
+      <StuNav head={name} Cid={courseId}/>
       <div style={{display:'flex', flexWrap:'row wrap', maxHeight:'580px', background: 'linear-gradient(to top, rgb(245, 245, 245), white)'}}>
         <MapPane state={state} dispatch={dispatch}/>
         <Content state={state} dispatch={dispatch}/>

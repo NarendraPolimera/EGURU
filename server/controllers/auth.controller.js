@@ -35,25 +35,34 @@ exports.registerController=(req,res)=>{
         //generate activation token 
         const token= jwt.sign({name,email,password}, process.env.JWT_ACC_ACTV, {expiresIn:'10m'});  /// private key + HMAC SHA256
 
-        const emailData={
-            from: process.env.EMAIL_FROM,
-            to:email,
-            subject:'Account link activation',
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'egurumdh@gmail.com',
+              pass: 'eguru1999mdh'
+            }
+          });
+          
+          var mailOptions = {
+            from: 'egurumdh@gmail.com',
+            to: email,
+            subject: 'Account link activation',
             html:`
             <h1>please click to activate account</h>
             <p>${process.env.CLIENT_URL}/users/activate/${token}</p>
             <p>This email contains sensitive data</p>
             <p>${process.env.CLIENT_URL}</p>`
-        }
-        sgMail.send(emailData)
-        .then(sent => {
-            console.log('email sent');
-            return res.json({ message: `Email has been sent to ${email}` });
-            })
-        .catch(err => {
-            console.log(err);
-            return res.status(400).json({ success: false, errors: errorHandler(err)});
-            });
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+              return res.status(400).json({ success: false, errors: errorHandler(error)});
+            } else {
+              console.log('Email sent: ' + info.response);
+              return res.json({ message: `Email has been sent to ${email}` });
+            }
+          });
             }
         });
 
@@ -152,16 +161,24 @@ exports.forgetController=(req,res)=>{
         const token= jwt.sign( { _id:user._id }, process.env.JWT_RESET_PASS, {expiresIn:'10m'});
          
         //sending email
-        const emailData={
-            from: process.env.EMAIL_FROM,
-            to:email,
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'egurumdh@gmail.com',
+              pass: 'eguru1999mdh'
+            }
+          });
+          
+          var mailOptions = {
+            from: 'egurumdh@gmail.com',
+            to: email,
             subject:'Password Reset Link',
             html:`
             <h1>please click to reset your password</h>
             <p>${process.env.CLIENT_URL}/users/password/reset/${token}</p>
             <p>This email contains sensitive data</p>
             <p>${process.env.CLIENT_URL}</p>`
-        }
+          };
 
         user.updateOne({resetPasswordLink:token},(err,success)=>{
             if(err)
@@ -171,9 +188,16 @@ exports.forgetController=(req,res)=>{
             else
             {
                 //send mail
-                sgMail.send(emailData)
-                .then(sent=>{ return res.json({message:`Check your Email- ${email}`}) })
-                .catch(err=>{ return res.json({error:err.message})});
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                      console.log(error);
+                      return res.json({error:error.message})
+                      
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                      return res.json({message:`Check your Email- ${email}`})
+                    }
+                  });
             }
         })
     })

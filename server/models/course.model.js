@@ -19,7 +19,6 @@ var coursedetails=new mongoose.Schema(
         sectionName:[String],
         subcontents:[[String]],
         contents:[[{
-            serialno:{type:Number, default:0},
             type:{type:String, default:''},
             link:{type:String, default:''},
             views:{type:Number, default:0},
@@ -46,6 +45,7 @@ const courseSchema=new mongoose.Schema(
             duration:{type:Number, default:0},
             rating:{type:mongoose.Schema.Types.Decimal128, default:0.0},
             members:[memdetails],
+            memRequest:[memdetails],
             roadmap:coursedetails
     },
     {
@@ -61,7 +61,7 @@ courseSchema.pre("save",function(next) {
       this.roadmap = {
         sectionName: ["Getting Started"],
         subcontents:[["Introduction"]],
-        contents:[[]]
+        contents:[[{type:'',link:''}]]
       };
     }
       next();

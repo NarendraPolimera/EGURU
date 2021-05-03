@@ -61,7 +61,7 @@ export const  isAuth=()=>{
         {
             if(localStorage.getItem('user'))
             {
-                var jp={user:localStorage.getItem('user'), token:getCookie('token')};
+                var jp={user:JSON.parse(localStorage.getItem('user')), token:getCookie('token')};
                 return jp;
             }
             else

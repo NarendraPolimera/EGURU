@@ -17,7 +17,7 @@ const Stunav=(props)=>{
   
           <ul class="ml-auto" style={{marginTop:"-3px"}}> 
               
-          <li style={{display: "inline"}}><Link to="/profile" class="icon-link"><img style={{height:'25px', paddingTop:'3px'}} src={Cset} alt='courseDetails'/></Link></li>
+          <li style={{display: "inline"}}><Link to={'/builder/courseview/'+props.Cid} class="icon-link"><img style={{height:'25px', paddingTop:'3px'}} src={Cset} alt='courseDetails'/></Link></li>
               <li style={{display: "inline"}}><Link to="/builder" class="icon-link"><img style={{height:'27px', paddingTop:'3px'}} src={Home} alt='homepage'/></Link></li>
           </ul>
         </div>
